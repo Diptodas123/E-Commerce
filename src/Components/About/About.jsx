@@ -1,9 +1,10 @@
 import React from 'react'
 import "./About.css"
+import HeroSection from '../Home/HeroSection';
 
 const About = () => {
   return (
-    <div>About</div>
+    <HeroSection name={"Quick E-commerce"}/>
   )
 }
 
