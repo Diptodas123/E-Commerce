@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button } from '../Button/Button';
+import { Button } from '../Button';
 
 const HeroSection = ({name}) => {
     return (
@@ -13,7 +13,7 @@ const HeroSection = ({name}) => {
                             Welcome to
                         </p>
                         <h1>{name}</h1>
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga, doloremque alias harum eius et saepe beatae. Maiores nostrum eius consequatur nemo perferendis enim obcaecati</p>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
                         <NavLink to={"/products"}>
                             <Button>Shop now</Button>
                         </NavLink>
@@ -21,7 +21,7 @@ const HeroSection = ({name}) => {
 
                     <div className='hero-section-image'>
                         <figure>
-                            <img src='img/hero-img.jpeg' alt='hero-image'
+                            <img src='img/hero-img.jpeg' alt='hero-img'
                                 className='img-style'
                             />
                         </figure>

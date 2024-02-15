@@ -9,6 +9,7 @@ import Cart from './Components/Cart/Cart';
 import ErrorPage from './Components/ErrorPage/ErrorPage';
 import { ThemeProvider } from 'styled-components';
 import Header from './Components/Header/Header';
+import Footer from './Components/Footer/Footer';
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
           <Route path='/cart' element={<Cart />}></Route>
           <Route path='*' element={<ErrorPage />}></Route>
         </Routes>
+        <Footer />
       </BrowserRouter>
     </ThemeProvider>
   );
