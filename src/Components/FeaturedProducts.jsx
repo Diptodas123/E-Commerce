@@ -63,6 +63,7 @@ const Wrapper = styled.section`
       margin-top: 1.5rem;
       height: 20rem;
       transition: all 0.2s linear;
+      object-fit:cover;
     }
 
     .caption {
