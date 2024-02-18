@@ -6,16 +6,6 @@ import { useProductContext } from '../../Context/ProductContext';
 import FeaturedProducts from '../FeaturedProducts';
 
 const Home = () => {
-  const {products,featuredProducts}=useProductContext();
-
-  const getFeaturedProducts=()=>{
-
-  }
-
-  useEffect(()=>{
-      getFeaturedProducts();
-  },[]);
-
   return (
     <>
       <HeroSection name='Quick Mart'/>
