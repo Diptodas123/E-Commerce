@@ -8,6 +8,8 @@ import Container from "../Container";
 import FormatPrice from "../../Helpers/FormatPrice";
 import PageNavigation from "../PageNavigation";
 import { useProductContext } from "../../Context/ProductContext";
+import Star from "../Star";
+import AddToCart from "../AddToCart";
 
 const API = "https://api.pujakaitem.com/api/products";
 
@@ -50,8 +52,7 @@ const SingleProduct = () => {
           {/* product Data  */}
           <div className="product-data">
             <h2>{name}</h2>
-            <p>{stars}</p>
-            <p>{reviews} reviews</p>
+            <Star stars={stars} reviews={reviews} />
             <p className="product-data-price">
               MRP:
               <del>
@@ -96,6 +97,8 @@ const SingleProduct = () => {
                 Brand :<span> {company} </span>
               </p>
             </div>
+            <hr />
+            {stock > 0 && <AddToCart product={singleProduct} />}
           </div>
         </div>
       </Container>
