@@ -2,19 +2,19 @@ import styled from "styled-components";
 import Product from "./Product";
 
 const GridView = ({ products }) => {
-    return (
-        <Wrapper className="section">
-            <div className="container grid grid-three-column">
-                {
-                    products.map((currentProduct, index) => {
-                        return (
-                            <Product key={currentProduct.id} {...currentProduct} />
-                        )
-                    })
-                }
-            </div>
-        </Wrapper>
-    )
+  return (
+    <Wrapper className="section">
+      <div className="container grid grid-three-column">
+        {
+          products.map((currentProduct, index) => {
+            return (
+              <Product key={currentProduct.id} {...currentProduct} />
+            )
+          })
+        }
+      </div>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.section`
