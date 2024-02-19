@@ -4,14 +4,18 @@ import ListView from './ListView';
 
 const ProductList = () => {
 
-  const { filterProducts,gridView } = useFilterContext();
+  const { filterProducts, gridView } = useFilterContext();
 
-  if(gridView){
-    return(
+  if (filterProducts.length === 0) {
+    return <div style={{ padding: "9rem 0", maxWidth: "120rem", textAlign: "center" }} > No Data </div>
+  }
+
+  if (gridView) {
+    return (
       <GridView products={filterProducts} />
     )
-  }else{
-    return(
+  } else {
+    return (
       <ListView products={filterProducts} />
     )
   }

@@ -9,6 +9,11 @@ const initialState = {
     allProducts: [],
     gridView: true,
     sortingValue: "lowest",
+    filters: {
+        text: "",
+        category: "all",
+        company: "all"
+    }
 }
 
 const FilterContextProvider = ({ children }) => {
@@ -33,17 +38,26 @@ const FilterContextProvider = ({ children }) => {
         dispatch({ type: "GET_SORT_VALUE", payload: userValue });
     }
 
+    //to filter based on searchText
+    const updateFilterValue = (event) => {
+        let name = event.target.name;
+        let value = event.target.value;
+
+        return dispatch({ type: "UPDATE_FILTERS_VALUE", payload: { name, value } })
+    }
+
     //to sort the pruducts
     useEffect(() => {
+        dispatch({ type: "FILTER_PRODUCTS" })
         dispatch({ type: "SORTING_PRODUCTS" })
-    }, [state.sortingValue]);
+    }, [state.sortingValue, state.filters]);
 
     useEffect(() => {
         dispatch({ type: "LOAD_FILTER_PRODUCTS", payload: products });
     }, [products]);
 
     return (
-        <FilterContext.Provider value={{ ...state, setGridView, setListView, sorting }}>
+        <FilterContext.Provider value={{ ...state, setGridView, setListView, sorting, updateFilterValue }}>
             {children}
         </FilterContext.Provider>
     )
