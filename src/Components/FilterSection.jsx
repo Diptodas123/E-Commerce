@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import { useFilterContext } from '../Context/FilterContext';
+import { FaCheck } from 'react-icons/fa';
+import FormatPrice from '../Helpers/FormatPrice';
 
 const FilterSection = () => {
 
-  const { filters: { text, category }, allProducts, updateFilterValue } = useFilterContext();
+  const { filters: { text, category, color, price, maxPrice, minPrice }, allProducts, updateFilterValue } = useFilterContext();
 
   //to get the unique data of each field for filter
   const getUniqueData = (data, property) => {
@@ -11,12 +13,18 @@ const FilterSection = () => {
       return currentElm[property];
     });
 
-    newVal = ["all", ...new Set(newVal)];
-    return newVal;
+    if (property === 'colors') {
+      // return (newVal = ['all', ...new Set([].concat(...newVal))]);
+      newVal = newVal.flat();
+    }
+
+    return (newVal = ["all", ...new Set(newVal)]);
+
   }
 
   const categoryData = getUniqueData(allProducts, "category");
   const companyData = getUniqueData(allProducts, "company");
+  const colorData = getUniqueData(allProducts, 'colors');
 
   return (
     <Wrapper>
@@ -72,6 +80,51 @@ const FilterSection = () => {
           </select>
         </form>
       </div>
+
+      <div className="filter-colors colors">
+        <h3>Colors</h3>
+        <div className="filter-color-style">
+          {
+            colorData.map((currentElm, index) => {
+              if (currentElm === 'all') {
+                return (
+                  <button key={index}
+                    value={currentElm} name='color' type='button'
+                    className='color-all--style' onClick={updateFilterValue}>
+                    All
+                  </button>
+                )
+              }
+              return (
+                <button key={index}
+                  type='button'
+                  className={color === currentElm ? 'btnStyle active' : 'btnStyle'}
+                  name={'color'}
+                  value={currentElm}
+                  style={{ backgroundColor: currentElm }}
+                  onClick={updateFilterValue}>
+                  {color === currentElm ? <FaCheck className="checkStyle" /> : null}
+                </button>
+              );
+            })
+          }
+        </div>
+      </div>
+
+      <div className="filter_price">
+        <h3>Price</h3>
+        <p>
+          <FormatPrice price={price} />
+        </p>
+        <input type="range"
+          name="price"
+          step={500}
+          min={minPrice}
+          max={maxPrice}
+          value={price}
+          onChange={updateFilterValue}
+        />
+      </div>
     </Wrapper>
   )
 }
@@ -99,7 +152,7 @@ const Wrapper = styled.section`
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 1.4rem;
+      gap: 1.2rem;
 
       button {
         border: none;

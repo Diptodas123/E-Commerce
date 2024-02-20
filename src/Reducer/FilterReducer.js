@@ -1,11 +1,26 @@
 const FilterReducer = (state, action) => {
     switch (action.type) {
         case "LOAD_FILTER_PRODUCTS":
+            let priceArr = action.payload.map((currentElem) => currentElem.price)
+            /*
+            to find the max value from an array
+            1st way
+            let maxPrice = Math.max.apply(Math, priceArr);
+
+            2nd way
+            let maxPrice = priceArr.reduce((initialVal, currentElem) => Math.max(initialVal, currentElem), 0)
+
+            3rd way
+            */
+            let maxPrice = Math.max(...priceArr);
+
             return {
                 ...state,
                 filterProducts: [...action.payload],
-                allProducts: [...action.payload]
+                allProducts: [...action.payload],
+                filters: { ...state.filters, maxPrice, price: maxPrice }
             };
+
         case "SET_GRID_VIEW":
             return {
                 ...state,
@@ -71,7 +86,7 @@ const FilterReducer = (state, action) => {
             let { allProducts } = state;
             let tempFilterProduct = [...allProducts];
 
-            const { text, category, company } = state.filters;
+            const { text, category, company, color, price } = state.filters;
 
             if (text) {
                 tempFilterProduct = tempFilterProduct.filter((currentElem) => {
@@ -88,6 +103,18 @@ const FilterReducer = (state, action) => {
             if (company !== 'all') {
                 tempFilterProduct = tempFilterProduct.filter((currentElem) => {
                     return currentElem.company === company;
+                })
+            }
+
+            if (color !== 'all') {
+                tempFilterProduct = tempFilterProduct.filter((currentElem) => {
+                    return currentElem.colors.includes(color);
+                })
+            }
+
+            if (price) {
+                tempFilterProduct = tempFilterProduct.filter((currentElem) => {
+                    return currentElem.price <= price;
                 })
             }
 
