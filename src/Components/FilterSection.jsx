@@ -2,10 +2,11 @@ import styled from 'styled-components';
 import { useFilterContext } from '../Context/FilterContext';
 import { FaCheck } from 'react-icons/fa';
 import FormatPrice from '../Helpers/FormatPrice';
+import { Button } from './Button';
 
 const FilterSection = () => {
 
-  const { filters: { text, category, color, price, maxPrice, minPrice }, allProducts, updateFilterValue } = useFilterContext();
+  const { filters: { text, category, color, price, maxPrice, minPrice }, allProducts, updateFilterValue, clearFilters } = useFilterContext();
 
   //to get the unique data of each field for filter
   const getUniqueData = (data, property) => {
@@ -124,6 +125,10 @@ const FilterSection = () => {
           value={price}
           onChange={updateFilterValue}
         />
+      </div>
+
+      <div className="filter-clear">
+        <Button className='btn' onClick={clearFilters}>Clear Filters</Button>
       </div>
     </Wrapper>
   )

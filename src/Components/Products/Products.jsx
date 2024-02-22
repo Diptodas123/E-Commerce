@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import Sort from '../Sort';
 import FilterSection from '../FilterSection';
 import ProductList from '../ProductList';
-import { useFilterContext } from '../../Context/FilterContext';
 
 const Products = () => {
   return (
