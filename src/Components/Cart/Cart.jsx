@@ -1,10 +1,20 @@
 import styled from "styled-components";
 import { useCartContext } from "../../Context/CartContext";
 import CartItem from "../CartItem";
+import { NavLink } from "react-router-dom";
+import { Button } from "../Button";
 
 const Cart = () => {
 
-  const { cart } = useCartContext();
+  const { cart, clearCart } = useCartContext();
+
+  if (!cart.length) {
+    return (
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <img src="https://cdn-icons-png.flaticon.com/512/11329/11329060.png" alt="empty-cart" />
+      </div>
+    );
+  }
 
   return (
     <Wrapper>
@@ -26,6 +36,15 @@ const Cart = () => {
               );
             })
           }
+        </div>
+
+        <hr />
+        <div className="cart-two-button">
+          <NavLink to={"/products"}>
+            <Button>Continue Shopping</Button>
+          </NavLink>
+
+          <Button className="btn btn-clear" onClick={clearCart}>Clear Cart</Button>
         </div>
       </div>
     </Wrapper>
