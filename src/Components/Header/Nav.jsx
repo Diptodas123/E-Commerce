@@ -1,14 +1,17 @@
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom';
+import { NavLink, json } from 'react-router-dom';
 import styled from 'styled-components';
 import { FiShoppingCart } from "react-icons/fi";
 import { CgMenu, CgClose } from "react-icons/cg";
 import { useCartContext } from '../../Context/CartContext';
+import { useAuth0 } from '@auth0/auth0-react';
+import { Button } from '../Button';
 
 const Nav = () => {
 
   const { totalItems } = useCartContext();
   const [menuIcon, setMenuIcon] = useState(false);
+  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
 
   const Nav = styled.nav`
     .navbar-lists {
@@ -164,6 +167,17 @@ const Nav = () => {
     }
   `;
 
+  if (isAuthenticated) {
+    localStorage.setItem("userData", JSON.stringify(user));
+  }
+
+  const { name } = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")) : "";
+
+  const handleLogout = () => {
+    logout({ returnTo: window.location.origin });
+    localStorage.removeItem("userData")
+  }
+
   return (
     <Nav>
       <div className={menuIcon ? "navbar active" : "navbar"}>
@@ -200,6 +214,25 @@ const Nav = () => {
               Contact
             </NavLink>
           </li>
+
+          {
+            localStorage.getItem("userData") && <p>{"Hi, " + name}</p>
+          }
+          {
+            localStorage.getItem("userData") ? (
+              <li>
+                <Button onClick={handleLogout}>
+                  Log Out
+                </Button>
+              </li>
+            ) : (
+              <li>
+                <Button onClick={() => loginWithRedirect()}>
+                  Log In
+                </Button>
+              </li>
+            )}
+
           <li>
             <NavLink to={"/cart"}
               className='navbar-link cart-trolley--link'
@@ -221,7 +254,7 @@ const Nav = () => {
             onClick={() => setMenuIcon(false)} />
         </div>
       </div>
-    </Nav>
+    </Nav >
   )
 }
 

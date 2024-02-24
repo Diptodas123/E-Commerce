@@ -9,6 +9,8 @@ const Cart = () => {
 
   const { cart, clearCart, totalPrice, shippingFee } = useCartContext();
 
+  const { name, picture } = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")) : "";
+
   if (!cart.length) {
     return (
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -20,11 +22,21 @@ const Cart = () => {
   return (
     <Wrapper>
       <div className="container">
+
+        {
+          localStorage.getItem("userData") && (
+            <div className="cart-user--profile">
+              <img src={picture} alt={name} />
+              <h2 className="cart-user--name">{name}</h2>
+            </div>
+          )
+        }
+
         <div className="cart_heading grid grid-five-column">
           <p>Items</p>
-          <p className="cart_hide">Price</p>
+          <p className="cart-hide">Price</p>
           <p>Quantity</p>
-          <p className="cart_hid">Subtotal</p>
+          <p className="cart-hide">Subtotal</p>
           <p>Remove</p>
         </div>
         <hr />
@@ -77,7 +89,7 @@ const Cart = () => {
 }
 
 const Wrapper = styled.section`
-padding: 9rem 0;
+padding: 2rem 0;
 
 .grid-four-column {
   grid-template-columns: repeat(4, 1fr);
@@ -188,7 +200,7 @@ hr {
 
 .order-total--amount {
   width: 100%;
-  margin: 4.8rem 0;
+  margin: 1.5rem 0;
   text-transform: capitalize;
   display: flex;
   flex-direction: column;
