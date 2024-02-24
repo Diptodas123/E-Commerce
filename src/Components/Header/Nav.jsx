@@ -7,7 +7,7 @@ import { useCartContext } from '../../Context/CartContext';
 
 const Nav = () => {
 
-  const { cart } = useCartContext();
+  const { totalItems } = useCartContext();
   const [menuIcon, setMenuIcon] = useState(false);
 
   const Nav = styled.nav`
@@ -163,7 +163,7 @@ const Nav = () => {
       }
     }
   `;
-  
+
   return (
     <Nav>
       <div className={menuIcon ? "navbar active" : "navbar"}>
@@ -205,7 +205,7 @@ const Nav = () => {
               className='navbar-link cart-trolley--link'
               onClick={() => setMenuIcon(false)}>
               <FiShoppingCart className="cart-trolley" />
-              <span className='cart-total--item'>{cart.length}</span>
+              <span className='cart-total--item'>{totalItems}</span>
             </NavLink>
           </li>
         </ul>

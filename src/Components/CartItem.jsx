@@ -1,22 +1,11 @@
-import { useState } from "react";
 import FormatPrice from "../Helpers/FormatPrice";
 import CartAmoutToggle from "./CartAmoutToggle";
 import { FaTrash } from "react-icons/fa";
 import { useCartContext } from "../Context/CartContext";
 
-const CartItem = ({ id, name, image, color, price, amount, max }) => {
+const CartItem = ({ id, name, image, color, price, amount }) => {
 
-    const { removeFromCart } = useCartContext();
-
-    const [quantity, setQuantity] = useState(amount);
-
-    const setDecrease = () => {
-        quantity > 1 ? setQuantity(quantity => quantity - 1) : setQuantity(1);
-    }
-
-    const setIncrease = () => {
-        quantity < max ? setQuantity(quantity => quantity + 1) : setQuantity(max);
-    }
+    const { removeFromCart, setDecrease, setIncrease } = useCartContext();
 
     return (
         <div className="cart_heading grid grid-five-column">
@@ -44,15 +33,15 @@ const CartItem = ({ id, name, image, color, price, amount, max }) => {
 
             {/* Quantity */}
             <CartAmoutToggle
-                amount={quantity}
-                setDecrease={setDecrease}
-                setIncrease={setIncrease}
+                amount={amount}
+                setDecrease={() => setDecrease(id)}
+                setIncrease={() => setIncrease(id)}
             />
 
             {/* Subtotal */}
             <div className="cart_hide">
                 <p>
-                    <FormatPrice price={price * quantity} />
+                    <FormatPrice price={price * amount} />
                 </p>
             </div>
 
