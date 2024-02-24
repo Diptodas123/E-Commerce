@@ -35,7 +35,9 @@ const SingleProduct = () => {
   }, []);
 
   if (isSingleLoading) {
-    return <div className="page_loading">Loading.....</div>;
+    return <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+      <img src="https://cdn.dribbble.com/users/2046015/screenshots/5973727/06-loader_telega.gif" alt="loading" />
+    </div>;
   }
 
   return (

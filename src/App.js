@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { GlobalStyle } from "./GlobalStyle";
 import Home from './Components/Home/Home';
 import About from './Components/About/About';
@@ -10,10 +10,13 @@ import ErrorPage from './Components/ErrorPage/ErrorPage';
 import { ThemeProvider } from 'styled-components';
 import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
-
+import LoadingBar from 'react-top-loading-bar';
+import { useTopLoaderContext } from './Context/TopLoaderContext';
 
 function App() {
 
+  const {topLoaderProgress}=useTopLoaderContext();
+  
   const theme = {
     colors: {
       heading: "rgb(24, 24, 29)",
@@ -39,20 +42,23 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <GlobalStyle />
-        <Header />
-        <Routes>
-          <Route path='/' element={<Home />}></Route>
-          <Route path='/about' element={<About />}></Route>
-          <Route path='/products' element={<Products />}></Route>
-          <Route path='/contact' element={<Contact />}></Route>
-          <Route path='/singleproduct/:id' element={<SingleProduct />}></Route>
-          <Route path='/cart' element={<Cart />}></Route>
-          <Route path='*' element={<ErrorPage />}></Route>
-        </Routes>
-        <Footer />
-      </BrowserRouter>
+      <LoadingBar
+        color='rgb(98, 84, 243)'
+        progress={topLoaderProgress}
+        height={5}
+      />
+      <GlobalStyle />
+      <Header />
+      <Routes>
+        <Route path='/' element={<Home />}></Route>
+        <Route path='/about' element={<About />}></Route>
+        <Route path='/products' element={<Products />}></Route>
+        <Route path='/contact' element={<Contact />}></Route>
+        <Route path='/singleproduct/:id' element={<SingleProduct />}></Route>
+        <Route path='/cart' element={<Cart />}></Route>
+        <Route path='*' element={<ErrorPage />}></Route>
+      </Routes>
+      <Footer />
     </ThemeProvider>
   );
 }

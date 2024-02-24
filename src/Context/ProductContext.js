@@ -45,7 +45,10 @@ const ProductProvider = ({ children }) => {
             const response = await axios.get(URL);
             const singleProduct = await response.data;
 
-            dispatch({ type: "SET_SINGLE_PRODUCT", payload: singleProduct })
+            //to delay and show the loading in the UI
+            setTimeout(() => {
+                dispatch({ type: "SET_SINGLE_PRODUCT", payload: singleProduct })
+            }, 1000);
         } catch (error) {
             dispatch({ type: "SET_SINGLE_ERROR" });
         }

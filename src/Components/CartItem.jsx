@@ -2,17 +2,21 @@ import FormatPrice from "../Helpers/FormatPrice";
 import CartAmoutToggle from "./CartAmoutToggle";
 import { FaTrash } from "react-icons/fa";
 import { useCartContext } from "../Context/CartContext";
+import { NavLink } from "react-router-dom";
 
 const CartItem = ({ id, name, image, color, price, amount }) => {
 
     const { removeFromCart, setDecrease, setIncrease } = useCartContext();
+
+    //split id as CartItem id consists of productId+color where every color starts with #
+    const urlId = id.split("#");    //urlId will contain [productId,color]
 
     return (
         <div className="cart_heading grid grid-five-column">
             <div className="cart-image--name">
                 <div>
                     <figure>
-                        <img src={image} alt={id} />
+                        <NavLink to={`/singleproduct/${urlId[0]}`} target="_blank"> <img src={image} alt={id} /></NavLink>
                     </figure>
                 </div>
                 <div>
