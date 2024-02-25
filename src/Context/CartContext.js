@@ -4,12 +4,11 @@ import reducer from "../Reducer/CartReducer";
 const CartContext = createContext();
 
 const getLocalCartData = () => {
-    let localCartData = localStorage.getItem("cartItems");
-    if (localCartData.length) {   //if the cart is not empty
-        return JSON.parse(localCartData);   //to convert cart object(arr) from string to object(array)
-    } else {
-        return [];
-    }
+    const localCartData = localStorage.getItem("cartItems");
+    const parsedData = JSON.parse(localCartData);
+
+    if (!Array.isArray(parsedData)) return [];
+    return parsedData;
 }
 
 const initialState = {
