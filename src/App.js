@@ -12,6 +12,8 @@ import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 import LoadingBar from 'react-top-loading-bar';
 import { useTopLoaderContext } from './Context/TopLoaderContext';
+import PaymentSuccess from './Components/PaymentSuccess';
+import PaymentCancel from './Components/PaymentCancel';
 
 function App() {
 
@@ -56,6 +58,8 @@ function App() {
         <Route path='/contact' element={<Contact />}></Route>
         <Route path='/singleproduct/:id' element={<SingleProduct />}></Route>
         <Route path='/cart' element={<Cart />}></Route>
+        <Route path='/success' element={<PaymentSuccess />}></Route>
+        <Route path='/cancel' element={<PaymentCancel />}></Route>
         <Route path='*' element={<ErrorPage />}></Route>
       </Routes>
       <Footer />

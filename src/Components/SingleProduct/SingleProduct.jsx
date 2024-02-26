@@ -23,7 +23,6 @@ const SingleProduct = () => {
     company,
     price,
     description,
-    category,
     stock,
     stars,
     reviews,
@@ -32,10 +31,11 @@ const SingleProduct = () => {
 
   useEffect(() => {
     getSingleProduct(`${API}?id=${id}`);
+    // eslint-disable-next-line
   }, []);
 
   if (isSingleLoading) {
-    return <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+    return <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
       <img src="https://cdn.dribbble.com/users/2046015/screenshots/5973727/06-loader_telega.gif" alt="loading" />
     </div>;
   }

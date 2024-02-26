@@ -4,12 +4,54 @@ import CartItem from "../CartItem";
 import { NavLink } from "react-router-dom";
 import { Button } from "../Button";
 import FormatPrice from "../../Helpers/FormatPrice";
+import { loadStripe } from '@stripe/stripe-js';
+import { useAuth0 } from "@auth0/auth0-react";
+import { useState } from "react";
 
 const Cart = () => {
 
+  const [loading, setLoading] = useState(false);
+
   const { cart, clearCart, totalPrice, shippingFee } = useCartContext();
+  const { loginWithRedirect, isAuthenticated, user } = useAuth0();
 
   const { name, picture } = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")) : "";
+
+  const handlePayment = async (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+
+    if (!name) {
+      if (window.confirm("Login to place a order")) {
+        loginWithRedirect();
+        if (isAuthenticated) {
+          localStorage.setItem("userData", JSON.stringify(user));
+        } else {
+          return;
+        }
+      }
+    }
+
+    const stripe = await loadStripe("pk_test_51OnhybSGyjAqVJnafFZdi9D97RPWbIe1aBnodJHynRbw7vF319LcHrxjr1g7hEQZSw8ph4KLVU8odJ6tgF5N1zDR00r7w2c8bR");
+    const response = await fetch("http://localhost:5000/api/create-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cart)
+    });
+
+    const session = await response.json();
+
+    const result = await stripe.redirectToCheckout({
+      sessionId: session.id
+    });
+
+    if (result.error) {
+      console.log(result.error);
+    }
+  }
 
   if (!cart.length) {
     return (
@@ -83,10 +125,18 @@ const Cart = () => {
             </div>
           </div>
         </div>
+
+        <div className="order-payment">
+          <Button type="button" disabled={loading} className={loading ? "disabled" : ""}
+            onClick={handlePayment}>
+            {loading ? "loading..." : "Proceed to Checkout"}
+          </Button>
+        </div>
       </div>
     </Wrapper>
   )
 }
+
 
 const Wrapper = styled.section`
 padding: 2rem 0;
@@ -229,6 +279,16 @@ hr {
     color: ${({ theme }) => theme.colors.heading};
   }
 }
+
+  .order-payment{
+    display:flex;
+    margin-top:2rem;
+    justify-content:flex-end;
+  }
+  
+  .disabled{
+    cursor:no-drop;
+  }
 
 @media (max-width: ${({ theme }) => theme.media.mobile}) {
   .grid-five-column {

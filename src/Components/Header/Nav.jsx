@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { NavLink, json } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { FiShoppingCart } from "react-icons/fi";
 import { CgMenu, CgClose } from "react-icons/cg";
