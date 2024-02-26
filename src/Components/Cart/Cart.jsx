@@ -33,8 +33,8 @@ const Cart = () => {
       }
     }
 
-    const stripe = await loadStripe("pk_test_51OnhybSGyjAqVJnafFZdi9D97RPWbIe1aBnodJHynRbw7vF319LcHrxjr1g7hEQZSw8ph4KLVU8odJ6tgF5N1zDR00r7w2c8bR");
-    const response = await fetch("http://localhost:5000/api/create-checkout-session", {
+    const stripe = await loadStripe(`${process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY}`);
+    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/create-checkout-session`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
